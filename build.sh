@@ -49,6 +49,7 @@ tar xzf ${LDAPCHERRY_VERSION}.tar.gz
 
 mv ldapcherry-${LDAPCHERRY_VERSION} ldapcherry
 cd ldapcherry
+sed -i 's/CherryPy >= 3.0.0/CherryPy >= 3.0.0, < 18.0.0/g' setup.py
 ${BUILD_DIR}/python/bin/python setup.py install
 
 echo "snapping"
