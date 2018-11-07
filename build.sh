@@ -30,6 +30,8 @@ coin --to ${BUILD_DIR} raw ${DOWNLOAD_URL}/python3-${ARCH}.tar.gz
 mv ${BUILD_DIR}/python3 ${BUILD_DIR}/python
 ${BUILD_DIR}/python/bin/pip install -r ${DIR}/requirements.txt
 
+apt-get install libyaml-dev
+
 #cp -r ${DIR}/bin ${BUILD_DIR}
 #cp -r ${DIR}/config ${BUILD_DIR}/config.templates
 #cp -r ${DIR}/hooks ${BUILD_DIR}
