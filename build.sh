@@ -26,8 +26,8 @@ BUILD_DIR=${DIR}/build/${NAME}
 mkdir -p ${BUILD_DIR}
 
 coin --to ${BUILD_DIR} raw ${DOWNLOAD_URL}/nginx-${ARCH}.tar.gz
-coin --to ${BUILD_DIR} raw ${DOWNLOAD_URL}/python3-${ARCH}.tar.gz
-mv ${BUILD_DIR}/python3 ${BUILD_DIR}/python
+coin --to ${BUILD_DIR} raw ${DOWNLOAD_URL}/python-${ARCH}.tar.gz
+#mv ${BUILD_DIR}/python3 ${BUILD_DIR}/python
 ${BUILD_DIR}/python/bin/pip install -r ${DIR}/requirements.txt
 
 apt-get install libyaml-dev
