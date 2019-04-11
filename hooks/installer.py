@@ -7,7 +7,7 @@ from syncloudlib.application import paths, storage
 
 APP_NAME = 'users'
 
-USER_NAME = APP_NAME
+USER_NAME = 'usersapp'
 DB_NAME = APP_NAME
 DB_USER = APP_NAME
 DB_PASSWORD = APP_NAME
