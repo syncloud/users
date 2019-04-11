@@ -24,13 +24,12 @@ coin --to ${BUILD_DIR} raw ${DOWNLOAD_URL}/nginx-${ARCH}.tar.gz
 coin --to ${BUILD_DIR} raw ${DOWNLOAD_URL}/python-${ARCH}.tar.gz
 ${BUILD_DIR}/python/bin/pip install -r ${DIR}/requirements.txt
 
-#cp -r ${DIR}/bin ${BUILD_DIR}
-#cp -r ${DIR}/config ${BUILD_DIR}/config.templates
-#cp -r ${DIR}/hooks ${BUILD_DIR}
+cp -r ${DIR}/bin ${BUILD_DIR}
+cp -r ${DIR}/config ${BUILD_DIR}/config.templates
+cp -r ${DIR}/hooks ${BUILD_DIR}
 
 cd ${BUILD_DIR}
 
-echo "getting latest diaspora source"
 wget --progress=dot:giga https://github.com/kakwa/ldapcherry/archive/${LDAPCHERRY_VERSION}.tar.gz
 
 tar xzf ${LDAPCHERRY_VERSION}.tar.gz
