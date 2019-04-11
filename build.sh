@@ -24,8 +24,6 @@ coin --to ${BUILD_DIR} raw ${DOWNLOAD_URL}/nginx-${ARCH}.tar.gz
 coin --to ${BUILD_DIR} raw ${DOWNLOAD_URL}/python-${ARCH}.tar.gz
 ${BUILD_DIR}/python/bin/pip install -r ${DIR}/requirements.txt
 
-#apt-get install libyaml-dev
-
 #cp -r ${DIR}/bin ${BUILD_DIR}
 #cp -r ${DIR}/config ${BUILD_DIR}/config.templates
 #cp -r ${DIR}/hooks ${BUILD_DIR}
@@ -39,7 +37,6 @@ tar xzf ${LDAPCHERRY_VERSION}.tar.gz
 
 mv ldapcherry-${LDAPCHERRY_VERSION} ldapcherry
 cd ldapcherry
-#sed -i 's/CherryPy >= 3.0.0/CherryPy >= 3.0.0, < 18.0.0/g' setup.py
 ${BUILD_DIR}/python/bin/python setup.py install
 
 mkdir ${DIR}/build/${NAME}/META
