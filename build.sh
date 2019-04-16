@@ -28,15 +28,12 @@ cp -r ${DIR}/bin ${BUILD_DIR}
 cp -r ${DIR}/config ${BUILD_DIR}/config.templates
 cp -r ${DIR}/hooks ${BUILD_DIR}
 
-cd ${BUILD_DIR}
+cd ${DIR}/build
 
 wget --progress=dot:giga https://github.com/kakwa/ldapcherry/archive/${LDAPCHERRY_VERSION}.tar.gz
-
 tar xzf ${LDAPCHERRY_VERSION}.tar.gz
-
-mv ldapcherry-${LDAPCHERRY_VERSION} ldapcherry
-cd ldapcherry
-${BUILD_DIR}/python/bin/python setup.py install
+cd ldapcherry-${LDAPCHERRY_VERSION}
+${BUILD_DIR}/python/bin/python setup.py install #--ptefix=${BUILD_DIR}/ldapcherry
 
 mkdir ${DIR}/build/${NAME}/META
 echo ${NAME} >> ${DIR}/build/${NAME}/META/app
