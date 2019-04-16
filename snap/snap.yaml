@@ -4,7 +4,7 @@ apps:
     #pre-start-command: bin/service.server.sh pre-start
     command: bin/service.server.sh start
     #post-start-command: bin/service.server.sh post-start
-    daemon: forking
+    daemon: simple
     start-timeout: 600s
     plugs:
     - network

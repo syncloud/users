@@ -12,7 +12,7 @@ export SYSCONFDIR=${SNAP_DATA}/config
 
 case $1 in
 start)
-    exec $DIR/python/bin/python $DIR/python/bin/ldapcherryd -c ${SNAP_DATA}/config/ldapcherry.ini -p ${SNAP_DATA}/ldapcherry.pid -d
+    exec $DIR/python/bin/python $DIR/python/bin/ldapcherryd -c ${SNAP_DATA}/config/ldapcherry.ini -p ${SNAP_DATA}/ldapcherry.pid
     ;;
 *)
     echo "not valid command"
