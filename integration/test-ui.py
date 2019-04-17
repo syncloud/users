@@ -17,12 +17,14 @@ def test_start(app, device_host):
 
     add_host_alias(app, device_host)
 
+def test_index(driver, mobile_driver, app_domain):
+    _test_index(driver, 'desktop', app_domain)
+    _test_index(mobile_driver, 'mobile', app_domain)
 
-def test_index(driver, mobile_driver, user_domain):
-    url = "https://{0}".format(user_domain)
+
+def _test_index(driver, mode, app_domain):
+    url = "https://{0}".format(app_domain)
     driver.get(url)
-    mobile_driver.get(url)
     time.sleep(10)
     
-    screenshots(driver, 'index')
-    screenshots(mobile_driver, 'index-mobile')
+    screenshots(driver, screenshot_dir, 'index-' + mode)
