@@ -28,3 +28,20 @@ def _test_index(driver, mode, app_domain):
     time.sleep(10)
     
     screenshots(driver, screenshot_dir, 'index-' + mode)
+
+
+test_login(driver, mobile_driver, app_domain):
+    _test_login(driver, 'desktop', app_domain)
+    _test_login(mobile_driver, 'mobile', app_domain)
+
+
+def _test_login(driver, mode, app_domain):
+    user = driver.find_element_by_id("login")
+    user.send_keys(DEVICE_USER)
+    password = driver.find_element_by_id("password")
+    password.send_keys(DEVICE_PASSWORD)
+    password.submit()
+    time.sleep(5)
+    screenshots(driver, screenshot_dir, 'login-' + mode)
+
+    
