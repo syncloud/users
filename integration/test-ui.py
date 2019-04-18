@@ -30,7 +30,7 @@ def _test_index(driver, mode, app_domain):
     screenshots(driver, screenshot_dir, 'index-' + mode)
 
 
-test_login(driver, mobile_driver, app_domain):
+def test_login(driver, mobile_driver, app_domain):
     _test_login(driver, 'desktop', app_domain)
     _test_login(mobile_driver, 'mobile', app_domain)
 
