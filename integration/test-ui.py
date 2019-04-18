@@ -36,9 +36,9 @@ def test_login(driver, mobile_driver, app_domain):
 
 
 def _test_login(driver, mode, app_domain):
-    user = driver.find_element_by_id("login")
+    user = driver.find_element_by_name("login")
     user.send_keys(DEVICE_USER)
-    password = driver.find_element_by_id("password")
+    password = driver.find_element_by_name("password")
     password.send_keys(DEVICE_PASSWORD)
     password.submit()
     time.sleep(5)
