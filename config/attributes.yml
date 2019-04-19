@@ -35,12 +35,6 @@ email:
     search_displayed: True
     type: email
     weight: 40
-#    autofill: 
-#        function: lcMail
-#        args:
-#            - $first-name
-#            - $name
-#            - '@example.com'
     backends:
         ldap: mail
 
@@ -85,19 +79,6 @@ gidNumber:
     backends:
         ldap: gidNumber
 
-home:
-    description: "Home user path"
-    display_name: "Home"
-    weight: 90
-    type: string
-    autofill: 
-        function: lcHomeDir
-        args:
-            - $first-name
-            - $name
-            - /home/
-    backends:
-        ldap: homeDirectory
 
 password:
     description: "Password of the user"
@@ -107,13 +88,3 @@ password:
     type: password
     backends:
         ldap: userPassword
-
-
-#logscript:
-#    description: "Windows login script"
-#    display_name: "Login script"
-#    weight: 100
-#    type: fix
-#    value: login1.bat
-#    backends:
-#        ad: scriptPath

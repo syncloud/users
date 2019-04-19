@@ -4,8 +4,7 @@ admin:
     LC_admins: True
     backends_groups:
         ldap:
-            - cn=admin,dc=syncloud,dc=org
-
+            - cn=syncloud,ou=groups,dc=syncloud,dc=org
 
 users:
     display_name: Users
