@@ -51,7 +51,7 @@ def test_edit(driver, mobile_driver, app_domain, device_user, device_password):
 
 
 def _test_edit(driver, mode, app_domain, device_user, device_password):
-    driver.find_element_by_xpath("//div[contains(text(),'Extensions')]").click()
+    driver.find_element_by_xpath("//a[contains(text(),'Self Modify')]").click()
    
     #password = driver.find_element_by_name("password")
     #password.send_keys(device_password)
