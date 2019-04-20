@@ -1,6 +1,7 @@
 import os
 import shutil
 import time
+import pytest
 from os.path import dirname, join, exists
 
 from syncloudlib.integration.hosts import add_host_alias
