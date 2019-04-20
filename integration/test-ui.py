@@ -53,8 +53,11 @@ def test_edit(driver, mobile_driver, app_domain, device_user, device_password):
 def _test_edit(driver, mode, app_domain, device_user, device_password):
     driver.find_element_by_xpath("//a[contains(text(),'Self Modify')]").click()
    
-    #password = driver.find_element_by_name("password")
-    #password.send_keys(device_password)
-    #password.submit()
+    password = driver.find_element_by_id("password1")
+    password.send_keys(device_password)
+    password1 = driver.find_element_by_id("#password2")
+    password1.send_keys(device_password)
+    password1.submit()
+    #driver.find_element_by_css_selector('input[name="name"][type="password"]').click()
     time.sleep(5)
     screenshots(driver, screenshot_dir, 'edit-' + mode)
