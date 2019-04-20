@@ -10,6 +10,20 @@ DIR = dirname(__file__)
 screenshot_dir = join(DIR, 'screenshot')
 
 
+@pytest.fixture(scope="session")
+def module_setup(request, device, log_dir):
+    request.addfinalizer(lambda: module_teardown(device, log_dir))
+
+
+def module_teardown(device, log_dir):
+        
+    device.run_ssh('mkdir /tmp/ui', throw=False)
+    device.run_ssh('journalctl > /tmp/ui/journalctl.ui.log', throw=False)
+    device.run_ssh('cp /var/log/syslog /tmp/ui/syslog.ui.log', throw=False)
+      
+    device.scp_from_device('/tmp/ui/*', join(app_log_dir, 'log'))
+
+
 def test_start(app, device_host):
     if exists(screenshot_dir):
         shutil.rmtree(screenshot_dir)
