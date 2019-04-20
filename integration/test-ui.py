@@ -22,7 +22,7 @@ def module_teardown(device, log_dir):
     device.run_ssh('journalctl > /tmp/ui/journalctl.ui.log', throw=False)
     device.run_ssh('cp /var/log/syslog /tmp/ui/syslog.ui.log', throw=False)
       
-    device.scp_from_device('/tmp/ui/*', join(app_log_dir, 'log'))
+    device.scp_from_device('/tmp/ui/*', join(log_dir, 'log'))
 
 
 def test_start(module_setup, app, device_host):
