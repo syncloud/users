@@ -25,7 +25,7 @@ def module_teardown(device, log_dir):
     device.scp_from_device('/tmp/ui/*', join(app_log_dir, 'log'))
 
 
-def test_start(app, device_host):
+def test_start(module_setup, app, device_host):
     if exists(screenshot_dir):
         shutil.rmtree(screenshot_dir)
     os.mkdir(screenshot_dir)
