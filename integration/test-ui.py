@@ -9,7 +9,7 @@ from syncloudlib.integration.screenshots import screenshots
 
 DIR = dirname(__file__)
 screenshot_dir = join(DIR, 'screenshot')
-
+TMP_DIR = '/tmp/syncloud/ui'
 
 @pytest.fixture(scope="session")
 def module_setup(request, device, log_dir):
@@ -17,12 +17,12 @@ def module_setup(request, device, log_dir):
 
 
 def module_teardown(device, log_dir):
-        
-    device.run_ssh('mkdir /tmp/ui', throw=False)
-    device.run_ssh('journalctl > /tmp/ui/journalctl.ui.log', throw=False)
-    device.run_ssh('cp /var/log/syslog /tmp/ui/syslog.ui.log', throw=False)
+    device.activated()
+    device.run_ssh('mkdir {0}'.format(TMP_DIR), throw=False)
+    device.run_ssh('journalctl > {0}/journalctl.ui.log'.format(TMP_DIR), throw=False)
+    device.run_ssh('cp /var/log/syslog {0}/syslog.ui.log'.format(TMP_DIR), throw=False)
       
-    device.scp_from_device('/tmp/ui/*', join(log_dir, 'log'))
+    device.scp_from_device('{0}/*'.format(TMP_DIR), join(log_dir, 'log'))
 
 
 def test_start(module_setup, app, device_host):
