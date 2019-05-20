@@ -73,6 +73,7 @@ def _test_edit(driver, mode, app_domain, device_user, device_password):
     password1 = driver.find_element_by_id("#password2")
     password1.send_keys("Password1")
     password1.submit()
-    #driver.find_element_by_css_selector('input[name="name"][type="password"]').click()
-    time.sleep(5)
+    
+    wait_driver = WebDriverWait(driver, 10)
+    wait_driver.until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, "span[data-notify='message']"), "Self modification done"))
     screenshots(driver, screenshot_dir, 'edit-' + mode)
