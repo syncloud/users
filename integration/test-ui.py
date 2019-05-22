@@ -21,26 +21,20 @@ def module_setup(request, device, log_dir):
 
 def module_teardown(device, log_dir):
     device.activated()
-    device.run_ssh('mkdir {0}'.format(TMP_DIR), throw=False)
-    device.run_ssh('journalctl > {0}/journalctl.ui.log'.format(TMP_DIR), throw=False)
-    device.run_ssh('cp /var/log/syslog {0}/syslog.ui.log'.format(TMP_DIR), throw=False)
+    device.run_ssh('mkdir -p {0}'.format(TMP_DIR), throw=False)
+    device.run_ssh('journalctl > {0}/journalctl.ui.{1} log'.format(TMP_DIR, ui_mode), throw=False)
+    device.run_ssh('cp /var/log/syslog {0}/syslog.ui.{1}.log'.format(TMP_DIR, ui_mode), throw=False)
       
     device.scp_from_device('{0}/*'.format(TMP_DIR), join(log_dir, 'log'))
 
 
 def test_start(module_setup, app, device_host):
-    if exists(screenshot_dir):
-        shutil.rmtree(screenshot_dir)
-    os.mkdir(screenshot_dir)
+    if not exists(screenshot_dir):
+        os.mkdir(screenshot_dir)
 
     add_host_alias(app, device_host)
 
-def test_login(driver, mobile_driver, app_domain):
-    _test_login(driver, 'desktop', app_domain)
-    _test_login(mobile_driver, 'mobile', app_domain)
-
-
-def _test_login(driver, mode, app_domain):
+def test_login(driver, app_domain):
     url = "https://{0}".format(app_domain)
     driver.get(url)
     time.sleep(10)
@@ -48,12 +42,7 @@ def _test_login(driver, mode, app_domain):
     screenshots(driver, screenshot_dir, 'login-' + mode)
 
 
-def test_index(driver, mobile_driver, app_domain, device_user, device_password):
-    _test_index(driver, 'desktop', app_domain, device_user, device_password)
-    _test_index(mobile_driver, 'mobile', app_domain, device_user, device_password)
-
-
-def _test_index(driver, mode, app_domain, device_user, device_password):
+def test_index(driver, app_domain, device_user, device_password):
     user = driver.find_element_by_name("login")
     user.send_keys(device_user)
     password = driver.find_element_by_name("password")
@@ -63,12 +52,7 @@ def _test_index(driver, mode, app_domain, device_user, device_password):
     screenshots(driver, screenshot_dir, 'index-' + mode)
 
 
-def test_edit(driver, mobile_driver, app_domain, device_user, device_password):
-    _test_edit(driver, 'desktop', app_domain, device_user, device_password)
-    _test_edit(mobile_driver, 'mobile', app_domain, device_user, device_password)
-
-
-def _test_edit(driver, mode, app_domain, device_user, device_password):
+def test_edit(driver, app_domain, device_user, device_password):
     driver.find_element_by_xpath("//a[contains(text(),'Self Modify')]").click()
    
     password = driver.find_element_by_id("password1")
@@ -80,3 +64,10 @@ def _test_edit(driver, mode, app_domain, device_user, device_password):
     wait_driver = WebDriverWait(driver, 10)
     wait_driver.until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, "span[data-notify='message']"), "Self modification done"))
     screenshots(driver, screenshot_dir, 'edit-' + mode)
+
+
+def test_new_user(driver, mode, app_domain, device_user, device_password):
+    driver.find_element_by_xpath("//a[contains(text(),'Add User')]").click()
+   
+    time.sleep(5)
+    screenshots(driver, screenshot_dir, 'add-user-' + mode)
