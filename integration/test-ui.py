@@ -63,9 +63,9 @@ def test_edit(driver, app_domain, device_user, device_password, ui_mode):
     
     wait_driver = WebDriverWait(driver, 10)
     done_message = (By.XPATH, "//span[@data-notify='message' and contains(text(),'Self modification done')]")
-    wait_driver.until(EC.presence_of_element_located(done_message)
+    wait_driver.until(EC.presence_of_element_located(done_message))
     screenshots(driver, screenshot_dir, 'edit-' + ui_mode)
-    wait_driver.until(EC.invisibility_of_element_located(done_message)
+    wait_driver.until(EC.invisibility_of_element_located(done_message))
 
 
 def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
