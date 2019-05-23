@@ -69,7 +69,7 @@ def test_edit(driver, app_domain, device_user, device_password, ui_mode):
 def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
     new_user_btn = "//a[contains(text(),'Add User')]"
     wait_driver = WebDriverWait(driver, 10)
-    wait_driver.until(EC.text_to_be_present_in_element(By.XPATH, new_user_btn))
+    wait_driver.until(EC.presence_of_element_located((By.XPATH, new_user_btn)))
     driver.find_element_by_xpath(new_user_btn).click()
    
     time.sleep(5)
