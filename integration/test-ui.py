@@ -62,14 +62,18 @@ def test_edit(driver, app_domain, device_user, device_password, ui_mode):
     password1.submit()
     
     wait_driver = WebDriverWait(driver, 10)
-    wait_driver.until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, "span[data-notify='message']"), "Self modification done"))
+    done_message = (By.XPATH, "//span[@data-notify='message' and contains(text(),'Self modification done')]")
+    wait_driver.until(EC.presence_of_element_located(done_message)
     screenshots(driver, screenshot_dir, 'edit-' + ui_mode)
+    wait_driver.until(EC.invisibility_of_element_located(done_message)
 
 
 def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
     new_user_btn = "//a[contains(text(),'Add User')]"
     wait_driver = WebDriverWait(driver, 10)
     wait_driver.until(EC.presence_of_element_located((By.XPATH, new_user_btn)))
+    screenshots(driver, screenshot_dir, 'add-user-' + ui_mode)
+
     driver.find_element_by_xpath(new_user_btn).click()
    
     time.sleep(5)
