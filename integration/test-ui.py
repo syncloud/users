@@ -34,25 +34,25 @@ def test_start(module_setup, app, device_host):
 
     add_host_alias(app, device_host)
 
-def test_login(driver, app_domain):
+def test_login(driver, app_domain, ui_mode):
     url = "https://{0}".format(app_domain)
     driver.get(url)
     time.sleep(10)
     
-    screenshots(driver, screenshot_dir, 'login-' + mode)
+    screenshots(driver, screenshot_dir, 'login-' + ui_mode)
 
 
-def test_index(driver, app_domain, device_user, device_password):
+def test_index(driver, app_domain, device_user, device_password, ui_mode):
     user = driver.find_element_by_name("login")
     user.send_keys(device_user)
     password = driver.find_element_by_name("password")
     password.send_keys(device_password)
     password.submit()
     time.sleep(5)
-    screenshots(driver, screenshot_dir, 'index-' + mode)
+    screenshots(driver, screenshot_dir, 'index-' + ui_mode)
 
 
-def test_edit(driver, app_domain, device_user, device_password):
+def test_edit(driver, app_domain, device_user, device_password, ui_mode):
     driver.find_element_by_xpath("//a[contains(text(),'Self Modify')]").click()
    
     password = driver.find_element_by_id("password1")
@@ -63,11 +63,11 @@ def test_edit(driver, app_domain, device_user, device_password):
     
     wait_driver = WebDriverWait(driver, 10)
     wait_driver.until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, "span[data-notify='message']"), "Self modification done"))
-    screenshots(driver, screenshot_dir, 'edit-' + mode)
+    screenshots(driver, screenshot_dir, 'edit-' + ui_mode)
 
 
-def test_new_user(driver, mode, app_domain, device_user, device_password):
+def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
     driver.find_element_by_xpath("//a[contains(text(),'Add User')]").click()
    
     time.sleep(5)
-    screenshots(driver, screenshot_dir, 'add-user-' + mode)
+    screenshots(driver, screenshot_dir, 'add-user-' + ui_mode)
