@@ -56,9 +56,9 @@ def test_edit(driver, app_domain, device_user, device_password, ui_mode):
     driver.find_element_by_xpath("//a[contains(text(),'Self Modify')]").click()
    
     password = driver.find_element_by_id("password1")
-    password.send_keys("Password1")
+    password.send_keys(device_password)
     password1 = driver.find_element_by_id("#password2")
-    password1.send_keys("Password1")
+    password1.send_keys(device_password)
     password1.submit()
     
     wait_driver = WebDriverWait(driver, 10)
