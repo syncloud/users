@@ -75,6 +75,8 @@ def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
     screenshots(driver, screenshot_dir, 'add-user-before-open-' + ui_mode)
 
     driver.find_element_by_xpath(new_user_btn).click()
+    time.sleep(5)
+    screenshots(driver, screenshot_dir, 'add-user-after-open-' + ui_mode)
 
     save_btn = "//button[contains(text(),'Add User')]"
     wait.until(EC.presence_of_element_located((By.XPATH, save_btn)))
