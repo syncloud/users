@@ -61,20 +61,27 @@ def test_edit(driver, app_domain, device_user, device_password, ui_mode):
     password1.send_keys(device_password)
     password1.submit()
     
-    wait_driver = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, 10)
     done_message = (By.XPATH, "//span[@data-notify='message' and contains(text(),'Self modification done')]")
-    wait_driver.until(EC.presence_of_element_located(done_message))
+    wait.until(EC.presence_of_element_located(done_message))
     screenshots(driver, screenshot_dir, 'edit-' + ui_mode)
-    wait_driver.until(EC.invisibility_of_element_located(done_message))
+    wait.until(EC.invisibility_of_element_located(done_message))
 
 
 def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
     new_user_btn = "//a[contains(text(),'Add User')]"
-    wait_driver = WebDriverWait(driver, 10)
-    wait_driver.until(EC.presence_of_element_located((By.XPATH, new_user_btn)))
+    wait = WebDriverWait(driver, 10)
+    wait.until(EC.presence_of_element_located((By.XPATH, new_user_btn)))
     screenshots(driver, screenshot_dir, 'add-user-' + ui_mode)
 
     driver.find_element_by_xpath(new_user_btn).click()
+
+    save_btn = "//button[contains(text(),'Add User')]"
+    wait.until(EC.presence_of_element_located((By.XPATH, save_btn)))
    
+    driver.find_element_by_id("attr.name").send_keys("Last Name")
+    driver.find_element_by_id("attr.first-name").send_keys("First Namr")
+ 
+    driver.find_element_by_xpath(save_btn).click()
     time.sleep(5)
     screenshots(driver, screenshot_dir, 'add-user-' + ui_mode)
