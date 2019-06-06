@@ -78,7 +78,7 @@ def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
     time.sleep(5)
     screenshots(driver, screenshot_dir, 'add-user-after-open-' + ui_mode)
 
-    save_btn = "//button[contains(text(),'Add User')]"
+    save_btn = "//button[contains(string(),'Add User')]"
     wait.until(EC.presence_of_element_located((By.XPATH, save_btn)))
    
     driver.find_element_by_id("attr.name").send_keys("Last Name")
