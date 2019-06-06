@@ -92,3 +92,6 @@ def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
     driver.find_element_by_xpath(save_btn).click()
     time.sleep(5)
     screenshots(driver, screenshot_dir, 'add-user-saved-' + ui_mode)
+    
+    assert not len(driver.find_elements_by_xpath(//h4[contains(string(),'An error occured')]"))
+
