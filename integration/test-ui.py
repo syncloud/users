@@ -83,6 +83,9 @@ def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
    
     driver.find_element_by_id("attr.name").send_keys("Last Name")
     driver.find_element_by_id("attr.first-name").send_keys("First Namr")
+    driver.find_element_by_id("attr.password1").send_keys("Password1!")
+    driver.find_element_by_name("attr.password2").send_keys("Password1!")
+    driver.find_element_by_id("attr.email").send_keys("test@example.com")
 
     screenshots(driver, screenshot_dir, 'add-user-before-save-' + ui_mode)
 
