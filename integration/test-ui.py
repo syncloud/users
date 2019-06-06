@@ -72,7 +72,7 @@ def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
     new_user_btn = "//a[contains(text(),'Add User')]"
     wait = WebDriverWait(driver, 10)
     wait.until(EC.presence_of_element_located((By.XPATH, new_user_btn)))
-    screenshots(driver, screenshot_dir, 'add-user-' + ui_mode)
+    screenshots(driver, screenshot_dir, 'add-user-before-open-' + ui_mode)
 
     driver.find_element_by_xpath(new_user_btn).click()
 
@@ -81,7 +81,9 @@ def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
    
     driver.find_element_by_id("attr.name").send_keys("Last Name")
     driver.find_element_by_id("attr.first-name").send_keys("First Namr")
- 
+
+    screenshots(driver, screenshot_dir, 'add-user-before-save-' + ui_mode)
+
     driver.find_element_by_xpath(save_btn).click()
     time.sleep(5)
-    screenshots(driver, screenshot_dir, 'add-user-' + ui_mode)
+    screenshots(driver, screenshot_dir, 'add-user-saved-' + ui_mode)
