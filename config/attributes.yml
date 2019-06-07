@@ -55,31 +55,6 @@ uid:
     backends:
         ldap: uid
 
-uidNumber:
-    description: "User ID Number of the user"
-    display_name: "UID Number"
-    weight: 60
-    type: int
-    autofill: 
-        function: lcUidNumber
-        args:
-            - $first-name
-            - $name
-            - '10000'
-            - '40000'
-    backends:
-        ldap: uidNumber
-
-gidNumber:
-    description: "Group ID Number of the user"
-    display_name: "GID Number"
-    weight: 70
-    type: int
-    default: '10000'
-    backends:
-        ldap: gidNumber
-
-
 password:
     description: "Password of the user"
     display_name: "Password"
