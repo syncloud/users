@@ -99,6 +99,11 @@ def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
 def test_modify_user(driver, app_domain, device_user, device_password, ui_mode):
     modify_btn = "//a[contains(text(),'Delete/Modify User')]"
     driver.find_element_by_xpath(modify_btn).click()
+    
+    search = driver.find_element_by_name("searchstring")
+    search.send_keys("Last Name")
+    search.submit()
+
     #wait = WebDriverWait(driver, 10)
     #wait.until(EC.presence_of_element_located((By.XPATH, new_user_btn)))
     time.sleep(5)
