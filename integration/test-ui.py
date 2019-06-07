@@ -95,3 +95,11 @@ def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
     
     assert not len(driver.find_elements_by_xpath("//h4[contains(string(),'An error occured')]"))
 
+
+def test_modify_user(driver, app_domain, device_user, device_password, ui_mode):
+    new_user_btn = "//a[contains(text(),'Delete/Modify User')]"
+    #wait = WebDriverWait(driver, 10)
+    #wait.until(EC.presence_of_element_located((By.XPATH, new_user_btn)))
+    time.sleep(5)
+    screenshots(driver, screenshot_dir, 'modify-user-' + ui_mode)
+
