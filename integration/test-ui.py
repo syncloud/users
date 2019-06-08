@@ -102,7 +102,7 @@ def test_modify_user(driver, app_domain, device_user, device_password, ui_mode):
     
     search = driver.find_element_by_id("searchstring")
     search.send_keys("Last Name")
-    search.submit()
+    driver.find_element_by_id("submit").click()
 
     #wait = WebDriverWait(driver, 10)
     #wait.until(EC.presence_of_element_located((By.XPATH, new_user_btn)))
