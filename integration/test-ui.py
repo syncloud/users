@@ -100,7 +100,7 @@ def test_modify_user(driver, app_domain, device_user, device_password, ui_mode):
     modify_btn = "//a[contains(text(),'Delete/Modify User')]"
     driver.find_element_by_xpath(modify_btn).click()
     
-    search = driver.find_element_by_name("searchstring")
+    search = driver.find_element_by_id("searchstring")
     search.send_keys("Last Name")
     search.submit()
 
