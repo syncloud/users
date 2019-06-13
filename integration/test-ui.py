@@ -119,6 +119,11 @@ def test_modify_user(driver, app_domain, device_user, device_password, ui_mode):
     modify_btn = "//td/a[contains(text(),'Modify')]"
     wait.until(EC.presence_of_element_located((By.XPATH, modify_btn)))
     driver.find_element_by_xpath(modify_btn).click()
-    
+
+    admin_name = "role.admin"
+    wait.until(EC.presence_of_element_located((By.NAME, admin_name)))
+
+    driver.find_element_by_name(admin_name).click()
+
     screenshots(driver, screenshot_dir, 'modify-user-' + ui_mode)
 
