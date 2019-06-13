@@ -52,7 +52,7 @@ def test_index(driver, app_domain, device_user, device_password, ui_mode):
     screenshots(driver, screenshot_dir, 'index-' + ui_mode)
 
 
-def test_edit(driver, app_domain, device_user, device_password, ui_mode):
+def test_password_edit(driver, app_domain, device_user, device_password, ui_mode):
     driver.find_element_by_xpath("//a[contains(text(),'Self Modify')]").click()
    
     password = driver.find_element_by_id("password1")
@@ -95,17 +95,30 @@ def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
     
     assert not len(driver.find_elements_by_xpath("//h4[contains(string(),'An error occured')]"))
 
+def test_search(driver, app_domain, device_user, device_password, ui_mode):
+    search_btn = "//a[contains(text(),'Delete/Modify User')]"
+    driver.find_element_by_xpath(search_btn).click()
+    search = driver.find_element_by_id("searchstring")
+    driver.find_element_by_id("submit").click()
+    wait = WebDriverWait(driver, 10)
+    modify_btn = "//td/a[contains(text(),'Modify')]"
+    wait.until(EC.presence_of_element_located((By.XPATH, new_user_btn)))
+  
+    screenshots(driver, screenshot_dir, 'search-' + ui_mode)
+
 
 def test_modify_user(driver, app_domain, device_user, device_password, ui_mode):
-    modify_btn = "//a[contains(text(),'Delete/Modify User')]"
-    driver.find_element_by_xpath(modify_btn).click()
+    search_btn = "//a[contains(text(),'Delete/Modify User')]"
+    driver.find_element_by_xpath(search_btn).click()
     
     search = driver.find_element_by_id("searchstring")
     search.send_keys("Last Name")
     driver.find_element_by_id("submit").click()
 
-    #wait = WebDriverWait(driver, 10)
-    #wait.until(EC.presence_of_element_located((By.XPATH, new_user_btn)))
-    time.sleep(5)
+    wait = WebDriverWait(driver, 10)
+    modify_btn = "//td/a[contains(text(),'Modify')]"
+    wait.until(EC.presence_of_element_located((By.XPATH, modify_btn)))
+    driver.find_element_by_xpath(modify_btn).click()
+    
     screenshots(driver, screenshot_dir, 'modify-user-' + ui_mode)
 
