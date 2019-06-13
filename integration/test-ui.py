@@ -102,7 +102,7 @@ def test_search(driver, app_domain, device_user, device_password, ui_mode):
     driver.find_element_by_id("submit").click()
     wait = WebDriverWait(driver, 10)
     modify_btn = "//td/a[contains(text(),'Modify')]"
-    wait.until(EC.presence_of_element_located((By.XPATH, new_user_btn)))
+    wait.until(EC.presence_of_element_located((By.XPATH, modify_btn)))
   
     screenshots(driver, screenshot_dir, 'search-' + ui_mode)
 
