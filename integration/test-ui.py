@@ -124,6 +124,9 @@ def test_modify_user(driver, app_domain, device_user, device_password, ui_mode):
     wait.until(EC.presence_of_element_located((By.CLASS_NAME, admin_role_btn)))
 
     driver.find_element_by_class_name(admin_role_btn).click()
-
+    time.sleep(2)
+    save_btn = "//button[contains(string(),'Modify User')]"
+    driver.find_element_by_xpath(save_btn).click()
+    time.sleep(2)
     screenshots(driver, screenshot_dir, 'modify-user-' + ui_mode)
 
