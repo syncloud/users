@@ -128,5 +128,7 @@ def test_modify_user(driver, app_domain, device_user, device_password, ui_mode):
     save_btn = "//button[contains(string(),'Modify User')]"
     driver.find_element_by_xpath(save_btn).click()
     time.sleep(2)
+    
     screenshots(driver, screenshot_dir, 'modify-user-' + ui_mode)
+    assert not len(driver.find_elements_by_xpath("//h4[contains(string(),'An error occured')]"))
 
