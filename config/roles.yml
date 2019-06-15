@@ -1,5 +1,6 @@
 admin:
     display_name: Administrators
+    description: Administrators
     LC_admins: True
     backends_groups:
         ldap:
