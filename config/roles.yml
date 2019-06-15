@@ -1,14 +1,6 @@
 admin:
     display_name: Administrators
-    description: Basic administrators of the system
     LC_admins: True
     backends_groups:
         ldap:
             - cn=syncloud,ou=groups,dc=syncloud,dc=org
-
-users:
-    display_name: Users
-    description: Basic users of the system
-    backends_groups:
-        ldap:
-            - ou=users,dc=syncloud,dc=org

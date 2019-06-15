@@ -120,10 +120,10 @@ def test_modify_user(driver, app_domain, device_user, device_password, ui_mode):
     wait.until(EC.presence_of_element_located((By.XPATH, modify_btn)))
     driver.find_element_by_xpath(modify_btn).click()
 
-    admin_name = "role.admin"
-    wait.until(EC.presence_of_element_located((By.NAME, admin_name)))
+    admin_role_btn = "bootstrap-switch-container"
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, admin_role_btn)))
 
-    driver.find_element_by_name(admin_name).click()
+    driver.find_element_by_css_selector(admin_role_btn).click()
 
     screenshots(driver, screenshot_dir, 'modify-user-' + ui_mode)
 
