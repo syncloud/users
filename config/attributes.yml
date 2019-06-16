@@ -41,7 +41,6 @@ email:
 uid:
     description: "UID of the user"
     display_name: "UID"
-    search_displayed: True
     key: True
     type: string
     weight: 50

@@ -141,8 +141,7 @@ def test_modify_same_user(driver, app_domain, device_user, device_password, ui_m
     search.send_keys(device_user)
     driver.find_element_by_id("submit").click()
     time.sleep(2)
-    screenshots(driver, screenshot_dir, 'modify-same-user-' + ui_mode)
-
+    
     wait = WebDriverWait(driver, 10)
     modify_btn = "//td/a[contains(text(),'Modify')]"
     wait.until(EC.presence_of_element_located((By.XPATH, modify_btn)))
@@ -151,6 +150,8 @@ def test_modify_same_user(driver, app_domain, device_user, device_password, ui_m
     name_id = "attr.name"
     wait.until(EC.presence_of_element_located((By.ID, name_id)))
     driver.find_element_by_id(name_id).send_keys("name")
+
+    screenshots(driver, screenshot_dir, 'modify-same-user-before-' + ui_mode)
 
     save_btn = "//button[contains(string(),'Modify User')]"
     driver.find_element_by_xpath(save_btn).click()
