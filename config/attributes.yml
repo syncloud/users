@@ -14,7 +14,6 @@ cn:
 first-name:
     description: "First name of the user"
     display_name: "First Name"
-    search_displayed: True
     type: string
     weight: 20
     backends:
