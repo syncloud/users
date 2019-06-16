@@ -146,7 +146,7 @@ def test_modify_same_user(driver, app_domain, device_user, device_password, ui_m
     wait = WebDriverWait(driver, 10)
     modify_btn = "//td/a[contains(text(),'Modify')]"
     wait.until(EC.presence_of_element_located((By.XPATH, modify_btn)))
-    driver.find_element_by_id(modify_btn).click()
+    driver.find_element_by_xpath(modify_btn).click()
 
     name_id = "attr.name"
     wait.until(EC.presence_of_element_located((By.ID, name_id)))
