@@ -11,7 +11,7 @@ pipeline:
     commands:
       - echo $(date +%y%m%d)$DRONE_BUILD_NUMBER > version
       - echo "users" > name
-      - echo $(date +%s) > domain
+      - echo ${arch}-$DRONE_BRANCH > domain
       
   build:
     image: syncloud/build-deps-${arch}
