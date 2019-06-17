@@ -31,7 +31,6 @@ name:
 email:
     description: "Email of the user"
     display_name: "Email"
-    search_displayed: True
     type: email
     weight: 40
     backends:
