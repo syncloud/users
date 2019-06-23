@@ -8,8 +8,6 @@ import requests
 from syncloudlib.integration.hosts import add_host_alias
 from syncloudlib.integration.installer import local_install, wait_for_rest
 
-DEFAULT_DEVICE_PASSWORD = 'syncloud'
-LOGS_SSH_PASSWORD = DEFAULT_DEVICE_PASSWORD
 DIR = dirname(__file__)
 TMP_DIR = '/tmp/syncloud'
 
