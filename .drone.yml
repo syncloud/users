@@ -12,7 +12,7 @@ steps:
   commands:
   - "echo $(date +%y%m%d)$DRONE_BUILD_NUMBER > version"
   - "echo users > name"
-  - "echo arm-$DRONE_BRANCH > domain"
+  - "echo arm$DRONE_BRANCH > domain"
 
 - name: build
   image: syncloud/build-deps-arm
@@ -97,7 +97,7 @@ steps:
   commands:
   - "echo $(date +%y%m%d)$DRONE_BUILD_NUMBER > version"
   - "echo users > name"
-  - "echo amd64-$DRONE_BRANCH > domain"
+  - "echo amd64$DRONE_BRANCH > domain"
 
 - name: build
   image: syncloud/build-deps-amd64
