@@ -84,7 +84,7 @@ local build(arch) = {
                 password: {
                     from_secret: "artifact_password"
                 },
-                port: 22,
+                command_timeout: "2m",
                 target: "/home/artifact/repo/users/" + arch,
                 source: "artifact/*"
             },

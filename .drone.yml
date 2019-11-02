@@ -49,11 +49,11 @@ steps:
 - name: artifact
   image: appleboy/drone-scp
   settings:
+    command_timeout: 2m
     host:
       from_secret: artifact_host
     password:
       from_secret: artifact_password
-    port: 22
     source: "artifact/*"
     target: /home/artifact/repo/users/arm
     username: artifact
@@ -145,11 +145,11 @@ steps:
 - name: artifact
   image: appleboy/drone-scp
   settings:
+    command_timeout: 2m
     host:
       from_secret: artifact_host
     password:
       from_secret: artifact_password
-    port: 22
     source: "artifact/*"
     target: /home/artifact/repo/users/amd64
     username: artifact
