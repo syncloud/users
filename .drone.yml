@@ -55,7 +55,8 @@ steps:
     password:
       from_secret: artifact_password
     source: "artifact/*"
-    target: /home/artifact/repo/users/arm
+    strip_components: 1
+    target: "/home/artifact/repo/users/${DRONE_BUILD_NUMBER}-arm"
     username: artifact
   when:
     status:
@@ -151,7 +152,8 @@ steps:
     password:
       from_secret: artifact_password
     source: "artifact/*"
-    target: /home/artifact/repo/users/amd64
+    strip_components: 1
+    target: "/home/artifact/repo/users/${DRONE_BUILD_NUMBER}-amd64"
     username: artifact
   when:
     status:

@@ -85,8 +85,9 @@ local build(arch) = {
                     from_secret: "artifact_password"
                 },
                 command_timeout: "2m",
-                target: "/home/artifact/repo/users/" + arch,
-                source: "artifact/*"
+                target: "/home/artifact/repo/users/${DRONE_BUILD_NUMBER}-" + arch,
+                source: "artifact/*",
+		strip_components: 1
             },
             when: {
               status: [ "failure", "success" ]
