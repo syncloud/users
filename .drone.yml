@@ -55,7 +55,7 @@ steps:
       from_secret: artifact_password
     port: 22
     source: "artifact/*"
-    target: /home/artifact/repo/users/$DRONE_BUILD_NUMBER-arm
+    target: /home/artifact/repo/users/arm
     username: artifact
   when:
     status:
@@ -151,7 +151,7 @@ steps:
       from_secret: artifact_password
     port: 22
     source: "artifact/*"
-    target: /home/artifact/repo/users/$DRONE_BUILD_NUMBER-amd64
+    target: /home/artifact/repo/users/amd64
     username: artifact
   when:
     status:

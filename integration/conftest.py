@@ -11,4 +11,16 @@ def log_dir():
 
 @pytest.fixture(scope="session")
 def artifact_dir():
-    return join(DIR, '..', 'artifact')
+   dir =  join(DIR, '..', 'artifact')
+   if not exists(dir):
+        os.mkdir(dir)
+    return dir
+
+@pytest.fixture(scope="session")
+def screenshot_dir(artifact_dir):
+    dir = join(artifact_dir, 'screenshot')
+    if not exists(dir):
+        os.mkdir(dir)
+    return dir
+
+

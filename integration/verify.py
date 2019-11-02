@@ -32,12 +32,10 @@ def module_setup(request, device, data_dir, platform_data_dir, app_dir, log_dir,
         device.run_ssh('ls -la {0}/web/ > {1}/web.ls.log'.format(app_dir, TMP_DIR), throw=False)
         device.run_ssh('ls -la {0}/log/ > {1}/log.ls.log'.format(data_dir, TMP_DIR), throw=False)
 
-        os.mkdir(artifact_dir)
         device.scp_from_device('{0}/log/*.log'.format(data_dir), artifact_dir)
         device.scp_from_device('{0}/*'.format(TMP_DIR), artifact_dir)
     
     request.addfinalizer(module_teardown)
-
 
 
 def test_start(module_setup, device, device_host, app, domain, log_dir):

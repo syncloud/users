@@ -4,34 +4,32 @@ import time
 import pytest
 from os.path import dirname, join, exists
 
-from syncloudlib.integration.hosts import add_host_alias
+from syncloudlib.integration.hosts import add_host_alias_by_ip
 from syncloudlib.integration.screenshots import screenshots
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 DIR = dirname(__file__)
-screenshot_dir = join(DIR, 'screenshot')
-TMP_DIR = '/tmp/syncloud/ui'
+
 
 @pytest.fixture(scope="session")
 def module_setup(request, device, log_dir, ui_mode, artifact_dir):
     def module_teardown():
+        tmp_dir = '/tmp/syncloud/ui'
         device.activated()
-        device.run_ssh('mkdir -p {0}'.format(TMP_DIR), throw=False)
-        device.run_ssh('journalctl > {0}/journalctl.ui.{1}.log'.format(TMP_DIR, ui_mode), throw=False)
-        device.run_ssh('cp /var/log/syslog {0}/syslog.ui.{1}.log'.format(TMP_DIR, ui_mode), throw=False)
+        device.run_ssh('mkdir -p {0}'.format(tmp_dir), throw=False)
+        device.run_ssh('journalctl > {0}/journalctl.ui.{1}.log'.format(tmp_dir, ui_mode), throw=False)
+        device.run_ssh('cp /var/log/syslog {0}/syslog.ui.{1}.log'.format(tmp_dir, ui_mode), throw=False)
       
-        device.scp_from_device('{0}/*'.format(TMP_DIR), artifact_dir)
+        device.scp_from_device('{0}/*'.format(tmp_dir), artifact_dir)
     request.addfinalizer(module_teardown)
 
-def test_start(module_setup, app, device_host):
-    if not exists(screenshot_dir):
-        os.mkdir(screenshot_dir)
+def test_start(module_setup, app, domain, device_host):
+    add_host_alias_by_ip(app, domain, device_host)
 
-    add_host_alias(app, device_host)
 
-def test_login(driver, app_domain, ui_mode):
+def test_login(driver, app_domain, ui_mode, screenshot_dir):
     url = "https://{0}".format(app_domain)
     driver.get(url)
     time.sleep(10)
@@ -39,7 +37,7 @@ def test_login(driver, app_domain, ui_mode):
     screenshots(driver, screenshot_dir, 'login-' + ui_mode)
 
 
-def test_index(driver, app_domain, device_user, device_password, ui_mode):
+def test_index(driver, app_domain, device_user, device_password, ui_mode, screenshot_dir):
     user = driver.find_element_by_name("login")
     user.send_keys(device_user)
     password = driver.find_element_by_name("password")
@@ -49,7 +47,7 @@ def test_index(driver, app_domain, device_user, device_password, ui_mode):
     screenshots(driver, screenshot_dir, 'index-' + ui_mode)
 
 
-def test_password_edit(driver, app_domain, device_user, device_password, ui_mode):
+def test_password_edit(driver, app_domain, device_user, device_password, ui_mode, screenshot_dir):
     driver.find_element_by_xpath("//a[contains(text(),'Self Modify')]").click()
    
     password = driver.find_element_by_id("password1")
@@ -65,7 +63,7 @@ def test_password_edit(driver, app_domain, device_user, device_password, ui_mode
     wait.until(EC.invisibility_of_element_located(done_message))
 
 
-def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
+def test_new_user(driver, app_domain, device_user, device_password, ui_mode, screenshot_dir):
     new_user_btn = "//a[contains(text(),'Add User')]"
     wait = WebDriverWait(driver, 10)
     wait.until(EC.presence_of_element_located((By.XPATH, new_user_btn)))
@@ -92,7 +90,7 @@ def test_new_user(driver, app_domain, device_user, device_password, ui_mode):
     
     assert not len(driver.find_elements_by_xpath("//h4[contains(string(),'An error occured')]"))
 
-def test_search(driver, app_domain, device_user, device_password, ui_mode):
+def test_search(driver, app_domain, device_user, device_password, ui_mode, screenshot_dir):
     search_btn = "//a[contains(text(),'Delete/Modify User')]"
     driver.find_element_by_xpath(search_btn).click()
     search = driver.find_element_by_id("searchstring")
@@ -104,7 +102,7 @@ def test_search(driver, app_domain, device_user, device_password, ui_mode):
     screenshots(driver, screenshot_dir, 'search-' + ui_mode)
 
 
-def test_modify_user(driver, app_domain, device_user, device_password, ui_mode):
+def test_modify_user(driver, app_domain, device_user, device_password, ui_mode, screenshot_dir):
     search_btn = "//a[contains(text(),'Delete/Modify User')]"
     driver.find_element_by_xpath(search_btn).click()
     
@@ -130,7 +128,7 @@ def test_modify_user(driver, app_domain, device_user, device_password, ui_mode):
     assert not len(driver.find_elements_by_xpath("//h4[contains(string(),'An error occured')]"))
 
 
-def test_modify_same_user(driver, app_domain, device_user, device_password, ui_mode):
+def test_modify_same_user(driver, app_domain, device_user, device_password, ui_mode, screenshot_dir):
     search_btn = "//a[contains(text(),'Delete/Modify User')]"
     driver.find_element_by_xpath(search_btn).click()
     

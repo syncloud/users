@@ -85,7 +85,7 @@ local build(arch) = {
                     from_secret: "artifact_password"
                 },
                 port: 22,
-                target: "/home/artifact/repo/users/$DRONE_BUILD_NUMBER-" +  arch,
+                target: "/home/artifact/repo/users/" + arch,
                 source: "artifact/*"
             },
             when: {
