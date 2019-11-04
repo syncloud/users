@@ -2,7 +2,7 @@ cn:
     description: "User name"
     display_name: "User name"
     type: string
-    weight: 30
+    weight: 10
     backends:
         ldap: cn
 
@@ -18,7 +18,7 @@ name:
     description: "Last name"
     display_name: "Last name"
     search_displayed: True
-    weight: 10
+    weight: 30
     type: string
     backends:
         ldap: sn
