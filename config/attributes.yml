@@ -1,18 +1,13 @@
 cn:
-    description: "First Name and Display Name"
-    display_name: "Display Name"
+    description: "User name"
+    display_name: "User name"
     type: string
     weight: 30
-    autofill: 
-        function: lcDisplayName
-        args:
-            - $first-name
-            - $name
     backends:
         ldap: cn
 
 first-name:
-    description: "First name of the user"
+    description: "First name"
     display_name: "First Name"
     type: string
     weight: 20
@@ -20,8 +15,8 @@ first-name:
         ldap: givenName
 
 name:
-    description: "Family name of the user"
-    display_name: "Name"
+    description: "Last name"
+    display_name: "Last name"
     search_displayed: True
     weight: 10
     type: string
@@ -29,7 +24,7 @@ name:
         ldap: sn
 
 email:
-    description: "Email of the user"
+    description: "Email"
     display_name: "Email"
     type: email
     weight: 40
@@ -37,7 +32,7 @@ email:
         ldap: mail
 
 uid:
-    description: "UID of the user"
+    description: "UID"
     display_name: "UID"
     key: True
     type: string
@@ -53,7 +48,7 @@ uid:
         ldap: uid
 
 password:
-    description: "Password of the user"
+    description: "Password"
     display_name: "Password"
     weight: 31
     self: True
