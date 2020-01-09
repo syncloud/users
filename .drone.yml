@@ -10,16 +10,14 @@ steps:
 - name: version
   image: syncloud/build-deps-arm
   commands:
-  - "echo $(date +%y%m%d)$DRONE_BUILD_NUMBER > version"
-  - "echo users > name"
-  - "echo arm$DRONE_BRANCH > domain"
+  - echo $(date +%y%m%d)$DRONE_BUILD_NUMBER > version
+  - echo arm$DRONE_BRANCH > domain
 
 - name: build
   image: syncloud/build-deps-arm
   commands:
-  - NAME=$(cat name)
   - VERSION=$(cat version)
-  - ./build.sh $NAME $VERSION
+  - ./build.sh users $VERSION
 
 - name: test-intergation
   image: syncloud/build-deps-arm
@@ -27,19 +25,17 @@ steps:
   - pip2 install -r dev_requirements.txt
   - APP_ARCHIVE_PATH=$(realpath $(cat package.name))
   - DOMAIN=$(cat domain)
-  - NAME=$(cat name)
   - cd integration
-  - py.test -x -s verify.py --domain=$DOMAIN --app-archive-path=$APP_ARCHIVE_PATH --device-host=device --app=$NAME
+  - py.test -x -s verify.py --domain=$DOMAIN --app-archive-path=$APP_ARCHIVE_PATH --device-host=device --app=users
 
 
 - name: upload
   image: syncloud/build-deps-arm
   commands:
   - VERSION=$(cat version)
-  - NAME=$(cat name)
   - PACKAGE=$(cat package.name)
   - pip2 install -r dev_requirements.txt
-  - syncloud-upload.sh $NAME $DRONE_BRANCH $VERSION $PACKAGE
+  - syncloud-upload.sh users $DRONE_BRANCH $VERSION $PACKAGE
   environment:
     AWS_ACCESS_KEY_ID:
       from_secret: AWS_ACCESS_KEY_ID
@@ -54,9 +50,10 @@ steps:
       from_secret: artifact_host
     password:
       from_secret: artifact_password
-    source: "artifact/*"
+    source: artifact/*
     strip_components: 1
-    target: "/home/artifact/repo/users/${DRONE_BUILD_NUMBER}-arm"
+    target: /home/artifact/repo/users/${DRONE_BUILD_NUMBER}-arm
+    timeout: 2m
     username: artifact
   when:
     status:
@@ -95,16 +92,14 @@ steps:
 - name: version
   image: syncloud/build-deps-amd64
   commands:
-  - "echo $(date +%y%m%d)$DRONE_BUILD_NUMBER > version"
-  - "echo users > name"
-  - "echo amd64$DRONE_BRANCH > domain"
+  - echo $(date +%y%m%d)$DRONE_BUILD_NUMBER > version
+  - echo amd64$DRONE_BRANCH > domain
 
 - name: build
   image: syncloud/build-deps-amd64
   commands:
-  - NAME=$(cat name)
   - VERSION=$(cat version)
-  - ./build.sh $NAME $VERSION
+  - ./build.sh users $VERSION
 
 - name: test-intergation
   image: syncloud/build-deps-amd64
@@ -112,19 +107,17 @@ steps:
   - pip2 install -r dev_requirements.txt
   - APP_ARCHIVE_PATH=$(realpath $(cat package.name))
   - DOMAIN=$(cat domain)
-  - NAME=$(cat name)
   - cd integration
-  - py.test -x -s verify.py --domain=$DOMAIN --app-archive-path=$APP_ARCHIVE_PATH --device-host=device --app=$NAME
+  - py.test -x -s verify.py --domain=$DOMAIN --app-archive-path=$APP_ARCHIVE_PATH --device-host=device --app=users
 
 - name: test-ui
   image: syncloud/build-deps-amd64
   commands:
   - pip2 install -r dev_requirements.txt
   - DOMAIN=$(cat domain)
-  - NAME=$(cat name)
   - cd integration
-  - "xvfb-run -l --server-args='-screen 0, 1024x4096x24' py.test -x -s test-ui.py --ui-mode=desktop --domain=$DOMAIN --device-host=device --app=$NAME"
-  - "xvfb-run -l --server-args='-screen 0, 1024x4096x24' py.test -x -s test-ui.py --ui-mode=mobile --domain=$DOMAIN --device-host=device --app=$NAME"
+  - xvfb-run -l --server-args='-screen 0, 1024x4096x24' py.test -x -s test-ui.py --ui-mode=desktop --domain=$DOMAIN --device-host=device --app=users
+  - xvfb-run -l --server-args='-screen 0, 1024x4096x24' py.test -x -s test-ui.py --ui-mode=mobile --domain=$DOMAIN --device-host=device --app=users
   volumes:
   - name: shm
     path: /dev/shm
@@ -133,10 +126,9 @@ steps:
   image: syncloud/build-deps-amd64
   commands:
   - VERSION=$(cat version)
-  - NAME=$(cat name)
   - PACKAGE=$(cat package.name)
   - pip2 install -r dev_requirements.txt
-  - syncloud-upload.sh $NAME $DRONE_BRANCH $VERSION $PACKAGE
+  - syncloud-upload.sh users $DRONE_BRANCH $VERSION $PACKAGE
   environment:
     AWS_ACCESS_KEY_ID:
       from_secret: AWS_ACCESS_KEY_ID
@@ -151,9 +143,10 @@ steps:
       from_secret: artifact_host
     password:
       from_secret: artifact_password
-    source: "artifact/*"
+    source: artifact/*
     strip_components: 1
-    target: "/home/artifact/repo/users/${DRONE_BUILD_NUMBER}-amd64"
+    target: /home/artifact/repo/users/${DRONE_BUILD_NUMBER}-amd64
+    timeout: 2m
     username: artifact
   when:
     status:
