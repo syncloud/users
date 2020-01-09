@@ -37,6 +37,7 @@ cd ${DIR}/build
 wget --progress=dot:giga https://github.com/kakwa/ldapcherry/archive/${LDAPCHERRY_VERSION}.tar.gz
 tar xzf ${LDAPCHERRY_VERSION}.tar.gz
 cd ldapcherry-${LDAPCHERRY_VERSION}
+${BUILD_DIR}/python/bin/pip install tempora==1.14.1
 ${BUILD_DIR}/python/bin/python setup.py install #--ptefix=${BUILD_DIR}/ldapcherry
 
 mkdir ${DIR}/build/${NAME}/META
