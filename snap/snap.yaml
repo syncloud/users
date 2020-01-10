@@ -21,6 +21,9 @@ apps:
     start-timeout: 600s
     stop-command: bin/service.nginx.sh stop
 
+  storage-change:
+    command: hooks/storage-change
+
 confinement: strict
 description: Users
 grade: stable
