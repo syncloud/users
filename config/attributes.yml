@@ -1,4 +1,4 @@
-cn:
+username:
     description: "User name"
     display_name: "User name"
     type: string
@@ -40,7 +40,7 @@ uid:
     autofill: 
         function: lcCopy
         args:
-            - $user-name
+            - $username
     backends:
         ldap: uid
 
