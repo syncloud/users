@@ -38,12 +38,9 @@ uid:
     type: string
     weight: 50
     autofill: 
-        function: lcUid
+        function: lcCopy
         args:
-            - $first-name
-            - $name
-            - '10000'
-            - '40000'
+            - $user-name
     backends:
         ldap: uid
 
