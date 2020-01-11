@@ -35,7 +35,7 @@ uid:
     description: "UID"
     display_name: "UID"
     key: True
-    type: fix
+    type: string
     weight: 50
     autofill: 
         function: lcCopy
