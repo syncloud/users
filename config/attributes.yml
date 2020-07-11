@@ -1,6 +1,7 @@
 username:
     description: "User name"
     display_name: "User name"
+    search_displayed: True
     type: string
     weight: 10
     backends:
@@ -9,6 +10,7 @@ username:
 first-name:
     description: "First name"
     display_name: "First Name"
+    search_displayed: True
     type: string
     weight: 20
     backends:
