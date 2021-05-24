@@ -13,9 +13,9 @@ TMP_DIR = '/tmp/syncloud'
 
 
 @pytest.fixture(scope="session")
-def module_setup(request, device, data_dir, platform_data_dir, app_dir, log_dir, artifact_dir):
+def module_setup(request, device, data_dir, platform_data_dir, app_dir, artifact_dir, snap_data_dir):
     def module_teardown():
-        platform_log_dir = join(log_dir, 'platform_log')
+        platform_log_dir = join(artifact_dir, 'platform_log')
         os.mkdir(platform_log_dir)
         device.scp_from_device('{0}/log/*'.format(platform_data_dir), platform_log_dir)
 
@@ -31,9 +31,16 @@ def module_setup(request, device, data_dir, platform_data_dir, app_dir, log_dir,
         device.run_ssh('ls -la {0}/ > {1}/data.ls.log'.format(data_dir, TMP_DIR), throw=False)
         device.run_ssh('ls -la {0}/web/ > {1}/web.ls.log'.format(app_dir, TMP_DIR), throw=False)
         device.run_ssh('ls -la {0}/log/ > {1}/log.ls.log'.format(data_dir, TMP_DIR), throw=False)
+        device.run_ssh('LD_LIBRARY_PATH=/snap/platform/current/openldap/lib '
+                       '/snap/platform/current/openldap/sbin/slapcat '
+                       '-F /var/snap/platform/common/slapd.d > {0}/ldap.ldif.log'.format(TMP_DIR),
+                       throw=False)
 
-        device.scp_from_device('{0}/log/*.log'.format(data_dir), artifact_dir)
-        device.scp_from_device('{0}/*'.format(TMP_DIR), artifact_dir)
+        app_log_dir = join(artifact_dir, 'log')
+        os.mkdir(app_log_dir)
+        device.scp_from_device('{0}/log/*.log'.format(data_dir), app_log_dir)
+        device.scp_from_device('{0}/*'.format(TMP_DIR), app_log_dir)
+        device.scp_from_device('{0}/config/*'.format(app_log_dir), artifact_dir, throw=False)
         check_output('chmod -R a+r {0}'.format(artifact_dir), shell=True)
 
     request.addfinalizer(module_teardown)

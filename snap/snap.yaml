@@ -1,8 +1,8 @@
 apps:
   server:
     user: usersapp
-    command: bin/service.server.sh start
-    daemon: simple
+    command: bin/service.php-fpm.sh
+    daemon: forking
     start-timeout: 600s
     plugs:
     - network
