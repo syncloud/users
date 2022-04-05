@@ -17,6 +17,24 @@ local build(arch) = {
                 "echo " + arch + "$DRONE_BRANCH > domain"
             ]
         },
+       {
+        name: "package python",
+        image: "debian:buster-slim",
+        commands: [
+            "./python/build.sh"
+        ],
+        volumes: [
+            {
+                name: "docker",
+                path: "/usr/bin/docker"
+            },
+            {
+                name: "docker.sock",
+                path: "/var/run/docker.sock"
+            }
+        ]
+    },
+
         {
             name: "build",
             image: "syncloud/build-deps-" + arch,
