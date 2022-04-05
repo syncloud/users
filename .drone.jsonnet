@@ -1,6 +1,6 @@
 local name = "users";
 local user = "tu";
-local build(arch) = {
+local build(arch, test_ui) = {
     kind: "pipeline",
     name: arch,
 
@@ -78,7 +78,7 @@ local build(arch) = {
               "py.test -x -s verify.py --domain=$DOMAIN --app-archive-path=$APP_ARCHIVE_PATH --device-host=device --app=" + name + " --device-user=" + user
             ]
         }] +
-        if arch == "arm" then [] else
+        (if test_ui then 
         [{
             name: "test-ui-desktop",
             image: "syncloud/build-deps-" + arch,
@@ -106,7 +106,7 @@ local build(arch) = {
                 name: "shm",
                 path: "/dev/shm"
             }]
-        }] + [
+        }] else []) + [
         {
             name: "upload",
             image: "syncloud/build-deps-" + arch,
@@ -206,7 +206,7 @@ local build(arch) = {
 };
 
 [
-    build("amd64"),
-    build("arm64"),
-    build("arm")
+    build("amd64", true),
+    build("arm64", false),
+    build("arm", false)
 ]
