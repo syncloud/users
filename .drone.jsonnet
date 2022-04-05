@@ -11,12 +11,19 @@ local build(arch) = {
     steps: [
         {
             name: "version",
-            image: "syncloud/build-deps-" + arch,
+            image: "debian:buster-slim",
             commands: [
-                "echo $(date +%y%m%d)$DRONE_BUILD_NUMBER > version",
+                "echo $DRONE_BUILD_NUMBER > version",
                 "echo " + arch + "$DRONE_BRANCH > domain"
             ]
         },
+    {
+        name: "download",
+        image: "debian:buster-slim",
+        commands: [
+            "./download.sh "
+        ]
+    },
        {
         name: "package python",
         image: "debian:buster-slim",
@@ -34,10 +41,27 @@ local build(arch) = {
             }
         ]
     },
+        {
+            name: "build php",
+            image: "debian:buster-slim",
+            commands: [
+                "./php/build.sh"
+            ],
+            volumes: [
+                {
+                    name: "docker",
+                    path: "/usr/bin/docker"
+                },
+                {
+                    name: "docker.sock",
+                    path: "/var/run/docker.sock"
+                }
+            ]
+        },
 
         {
             name: "build",
-            image: "syncloud/build-deps-" + arch,
+            image: "debian:buster-slim",
             commands: [
                 "VERSION=$(cat version)",
                 "./build.sh " + name + " $VERSION"
