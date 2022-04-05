@@ -15,11 +15,11 @@ ARCH=$(uname -m)
 VERSION=$2
 DOWNLOAD_URL=https://github.com/syncloud/3rdparty/releases/download/1
 
-rm -rf ${DIR}/build
-BUILD_DIR=${DIR}/build/snap
+BUILD_DIR=${DIR}/build/snap/app
+mkdir -p ${BUILD_DIR}
 
 cp -r ${DIR}/bin ${BUILD_DIR}
-cp -r ${DIR}/config ${BUILD_DIR}/config.templates
+cp -r ${DIR}/config ${BUILD_DIR}
 cp -r ${DIR}/hooks ${BUILD_DIR}
 
 cd ${DIR}/build
@@ -27,26 +27,3 @@ cd ${DIR}/build
 wget --progress=dot:giga https://github.com/wheelybird/ldap-user-manager/archive/${LDAP_USER_MANAGER_VERSION}.tar.gz
 tar xzf ${LDAP_USER_MANAGER_VERSION}.tar.gz
 mv ldap-user-manager-${LDAP_USER_MANAGER_VERSION}/www ${BUILD_DIR}
-
-mkdir ${DIR}/build/${NAME}/META
-echo ${NAME} >> ${DIR}/build/${NAME}/META/app
-echo ${VERSION} >> ${DIR}/build/${NAME}/META/version
-
-echo "snapping"
-SNAP_DIR=${DIR}/build/snap
-ARCH=$(dpkg-architecture -q DEB_HOST_ARCH)
-rm -rf ${DIR}/*.snap
-mkdir ${SNAP_DIR}
-cp -r ${BUILD_DIR}/* ${SNAP_DIR}/
-cp -r ${DIR}/snap/meta ${SNAP_DIR}/
-cp ${DIR}/snap/snap.yaml ${SNAP_DIR}/meta/snap.yaml
-echo "version: $VERSION" >> ${SNAP_DIR}/meta/snap.yaml
-echo "architectures:" >> ${SNAP_DIR}/meta/snap.yaml
-echo "- ${ARCH}" >> ${SNAP_DIR}/meta/snap.yaml
-
-PACKAGE=${NAME}_${VERSION}_${ARCH}.snap
-echo ${PACKAGE} > ${DIR}/package.name
-mksquashfs ${SNAP_DIR} ${DIR}/${PACKAGE} -noappend -comp xz -no-xattrs -all-root
-
-mkdir ${DIR}/artifact
-cp ${DIR}/${PACKAGE} ${DIR}/artifact

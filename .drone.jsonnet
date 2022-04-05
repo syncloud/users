@@ -67,6 +67,14 @@ local build(arch, test_ui) = {
                 "./build.sh " + name + " $VERSION"
             ]
         },
+    {
+        name: "package",
+        image: "debian:buster-slim",
+        commands: [
+            "VERSION=$(cat version)",
+            "./package.sh " + name + " $VERSION "
+        ]
+    },
         {
             name: "test-intergation",
             image: "syncloud/build-deps-" + arch,
