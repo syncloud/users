@@ -1,4 +1,5 @@
 local name = "users";
+local version = "master";
 local browser = "firefox";
 local user = "tu";
 
