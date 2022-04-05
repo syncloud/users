@@ -188,7 +188,20 @@ local build(arch) = {
         {
             name: "shm",
             temp: {}
+        },
+{
+            name: "docker",
+            host: {
+                path: "/usr/bin/docker"
+            }
+        },
+        {
+            name: "docker.sock",
+            host: {
+                path: "/var/run/docker.sock"
+            }
         }
+
     ]
 };
 
