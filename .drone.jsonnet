@@ -53,9 +53,9 @@ local build(arch) = {
               "cd integration",
               "py.test -x -s verify.py --domain=$DOMAIN --app-archive-path=$APP_ARCHIVE_PATH --device-host=device --app=" + name + " --device-user=" + user
             ]
-        },
-        if arch == "arm" then {} else
-        {
+        }] +
+        if arch == "arm" then [] else
+        [{
             name: "test-ui-desktop",
             image: "syncloud/build-deps-" + arch,
             commands: [
@@ -69,7 +69,6 @@ local build(arch) = {
                 path: "/dev/shm"
             }]
         },
-        if arch == "arm" then {} else
         {
             name: "test-ui-mobile",
             image: "syncloud/build-deps-" + arch,
@@ -83,7 +82,7 @@ local build(arch) = {
                 name: "shm",
                 path: "/dev/shm"
             }]
-        },
+        }] + [
         {
             name: "upload",
             image: "syncloud/build-deps-" + arch,
@@ -170,6 +169,7 @@ local build(arch) = {
 };
 
 [
-    build("arm"),
-    build("amd64")
+    build("amd64"),
+    build("arm64")
+    build("arm")
 ]
