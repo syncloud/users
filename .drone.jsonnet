@@ -170,6 +170,6 @@ local build(arch) = {
 
 [
     build("amd64"),
-    build("arm64")
+    build("arm64"),
     build("arm")
 ]
