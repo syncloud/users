@@ -1,5 +1,5 @@
 local name = "users";
-
+local user = "tu";
 local build(arch) = {
     kind: "pipeline",
     name: arch,
@@ -33,7 +33,7 @@ local build(arch) = {
               "APP_ARCHIVE_PATH=$(realpath $(cat package.name))",
               "DOMAIN=$(cat domain)",
               "cd integration",
-              "py.test -x -s verify.py --domain=$DOMAIN --app-archive-path=$APP_ARCHIVE_PATH --device-host=device --app=" + name
+              "py.test -x -s verify.py --domain=$DOMAIN --app-archive-path=$APP_ARCHIVE_PATH --device-host=device --app=" + name + " --device-user=" + user
             ]
         },
         if arch == "arm" then {} else
@@ -44,7 +44,7 @@ local build(arch) = {
               "pip2 install -r dev_requirements.txt",
               "DOMAIN=$(cat domain)",
               "cd integration",
-              "py.test -x -s test-ui.py --ui-mode=desktop --domain=$DOMAIN --device-host=device --app=" + name,
+              "py.test -x -s test-ui.py --ui-mode=desktop --domain=$DOMAIN --device-host=device --app=" + name+ " --device-user=" + user,
             ],
             volumes: [{
                 name: "shm",
@@ -59,7 +59,7 @@ local build(arch) = {
               "pip2 install -r dev_requirements.txt",
               "DOMAIN=$(cat domain)",
               "cd integration",
-              "py.test -x -s test-ui.py --ui-mode=mobile --domain=$DOMAIN --device-host=device --app=" + name,
+              "py.test -x -s test-ui.py --ui-mode=mobile --domain=$DOMAIN --device-host=device --app=" + name+ " --device-user=" + user,
             ],
             volumes: [{
                 name: "shm",
