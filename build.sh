@@ -15,6 +15,9 @@ ARCH=$(uname -m)
 VERSION=$2
 DOWNLOAD_URL=https://github.com/syncloud/3rdparty/releases/download/1
 
+apt update
+apt install -y wget
+
 BUILD_DIR=${DIR}/build/snap/app
 mkdir -p ${BUILD_DIR}
 
