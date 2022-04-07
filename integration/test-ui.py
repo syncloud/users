@@ -2,7 +2,7 @@ from os.path import dirname, join
 from subprocess import check_output
 
 import pytest
-from syncloudlib.integration.hosts import add_host_alias_by_ip
+from syncloudlib.integration.hosts import add_host_alias
 
 DIR = dirname(__file__)
 TMP_DIR = '/tmp/syncloud/ui'
@@ -28,7 +28,7 @@ def module_setup(request, device, artifact_dir, ui_mode):
 
 
 def test_start(module_setup, app, domain, device_host):
-    add_host_alias_by_ip(app, domain, device_host)
+    add_host_alias(app, device_host, domain)
 
 
 def test_index(selenium):
@@ -237,5 +237,4 @@ def test_new_user_login_second(selenium, new_username):
 #
 #     screenshots(driver, screenshot_dir, 'modify-same-user-' + ui_mode)
 #     assert not len(driver.find_elements_by_xpath("//h4[contains(string(),'An error occured')]"))
-
 
