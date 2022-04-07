@@ -16,7 +16,7 @@ DOWNLOAD_URL=https://github.com/syncloud/3rdparty/releases/download/1
 apt update
 apt install -y wget
 
-BUILD_DIR=${DIR}/build/snap/app
+BUILD_DIR=${DIR}/build/snap
 mkdir -p ${BUILD_DIR}
 
 cp -r ${DIR}/bin ${BUILD_DIR}
