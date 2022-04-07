@@ -72,7 +72,7 @@ def test_new_user(selenium, new_username, new_mail):
     selenium.find_by_xpath("//a[text()='Users']")
     new_user_btn = selenium.find_by_xpath("//button[contains(text(),'New user')]")
     selenium.screenshot('add-user-before-open')
-    assert 'WARNING' not in selenium.driver.page_source.encode("utf-8")
+    assert 'WARNING' not in str(selenium.driver.page_source.encode("utf-8"))
     new_user_btn.click()
 
     selenium.find_by_xpath("//div[text()='New account']")
