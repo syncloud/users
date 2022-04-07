@@ -12,7 +12,7 @@ def project_dir():
 
 @pytest.fixture(scope="session")
 def new_username(ui_mode):
-    return "username-{}".format(ui_mode)
+    return ui_mode[:2]
 
 
 @pytest.fixture(scope="session")
