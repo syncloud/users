@@ -13,7 +13,3 @@ def test_login_with_admin(selenium, device_user, device_password):
     password.submit()
     selenium.find_by_xpath("//a[text()='Log Out']")
     selenium.screenshot('main')
-ogin_progress')
-    selenium.find_by_css("span.material-icons.menu")
-    selenium.screenshot('main')
-
