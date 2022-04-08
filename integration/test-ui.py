@@ -1,6 +1,6 @@
 from os.path import dirname, join
 from subprocess import check_output
-
+from integration.lib import login_with_admin
 import pytest
 from syncloudlib.integration.hosts import add_host_alias
 
@@ -37,14 +37,7 @@ def test_index(selenium):
 
 
 def test_login_with_admin(selenium, device_user, device_password):
-    selenium.find_by_xpath("//a[text()='Log In']").click()
-    selenium.find_by_xpath("//input[@name='user_id']").send_keys(device_user)
-    password = selenium.driver.find_element_by_name("password")
-    password.send_keys(device_password)
-    selenium.screenshot('login-credentials')
-    password.submit()
-    selenium.find_by_xpath("//a[text()='Log Out']")
-    selenium.screenshot('main')
+    login_with_admin(selenium, device_user, device_password)
 
 
 # def test_password_edit(driver, ui_mode, screenshot_dir):

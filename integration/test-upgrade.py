@@ -2,7 +2,7 @@ import pytest
 from subprocess import check_output
 from syncloudlib.integration.hosts import add_host_alias
 from syncloudlib.integration.installer import local_install
-from integration.lib import login
+from integration.lib import login_with_admin
 from syncloudlib.http import wait_for_rest
 from selenium.webdriver.common.keys import Keys
 import requests
@@ -32,4 +32,6 @@ def test_upgrade(device, selenium, device_user, device_password, device_host, ap
     device.run_ssh('snap remove users')
     device.run_ssh('snap install users')
     
+    wait_for_rest(requests.session(), "https://{0}".format(app_domain), 200, 10)
+    login_with_admin(selenium, device_user, device_password):er.get("https://{0}/channel/general".format(app_domain))
 
