@@ -238,3 +238,7 @@ def test_new_user_login_second(selenium, new_username):
 #     screenshots(driver, screenshot_dir, 'modify-same-user-' + ui_mode)
 #     assert not len(driver.find_elements_by_xpath("//h4[contains(string(),'An error occured')]"))
 
+
+def test_teardown(driver):
+    driver.quit()
+
