@@ -31,11 +31,6 @@ def test_start(module_setup, app, domain, device_host):
     add_host_alias(app, device_host, domain)
 
 
-def test_index(selenium):
-    selenium.open_app()
-    selenium.screenshot('index')
-
-
 def test_login_with_admin(selenium, device_user, device_password):
     login_with_admin(selenium, device_user, device_password)
 
