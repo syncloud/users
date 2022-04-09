@@ -1,6 +1,6 @@
 local name = "users";
 local version = "master";
-local browser = "firefox";
+local browser = "chrome";
 
 local build(arch, test_ui) = [{
     kind: "pipeline",
@@ -362,3 +362,4 @@ local build(arch, test_ui) = [{
 build("amd64", true) + 
 build("arm64", false) +
 build("arm", false)
+
