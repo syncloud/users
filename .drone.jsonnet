@@ -112,7 +112,7 @@ local build(arch, test_ui) = [{
         detach: true,
         environment: {
             "DISPLAY_CONTAINER_NAME": "selenium",
-            "PRESET": "-preset ultrafast -movflags faststart"
+             FILE_NAME: "video.webm"
         },
         volumes: [
             {
@@ -363,4 +363,3 @@ local build(arch, test_ui) = [{
 build("amd64", true) + 
 build("arm64", false) +
 build("arm", false)
-
