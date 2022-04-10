@@ -112,7 +112,7 @@ local build(arch, test_ui) = [{
         detach: true,
         environment: {
             "DISPLAY_CONTAINER_NAME": "selenium",
-             FILE_NAME: "video.webm"
+             FILE_NAME: "video.mkv"
         },
         volumes: [
             {
@@ -363,3 +363,4 @@ local build(arch, test_ui) = [{
 build("amd64", true) + 
 build("arm64", false) +
 build("arm", false)
+
