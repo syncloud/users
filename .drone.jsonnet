@@ -124,52 +124,23 @@ local build(arch, test_ui) = [{
                 path: "/videos"
             }
         ]
-    },
+    }] + [
     {
-        name: "test-ui-desktop-jessie",
+        name: "test-ui-" + mode + "-" + distro,
         image: "python:3.8-slim-buster",
         commands: [
           "cd integration",
           "./deps.sh",
-          "py.test -x -s test-ui.py --distro=jessie --ui-mode=desktop --domain=jessie.com --device-host=" + name + ".jessie.com --app=" + name + " --browser=" + browser
+          "py.test -x -s test-ui.py --distro="+distro+" --ui-mode="+mode+" --domain="+distro+".com --device-host=" + name + "."+distro+".com --app=" + name + " --browser=" + browser
         ],
         volumes: [{
             name: "shm",
             path: "/dev/shm"
         }]
-    },
-    {
-        name: "test-ui-mobile-jessie",
-        image: "python:3.8-slim-buster",
-        commands: [
-          "cd integration",
-          "./deps.sh",
-          "py.test -x -s test-ui.py --distro=jessie --ui-mode=mobile --domain=jessie.com --device-host=" + name + ".jessie.com --app=" + name + " --browser=" + browser
-        ],
-        volumes: [{
-            name: "shm",
-            path: "/dev/shm"
-        }]
-    },
-    {
-        name: "test-ui-desktop-buster",
-        image: "python:3.8-slim-buster",
-        commands: [
-          "apt-get update && apt-get install -y sshpass openssh-client libxml2-dev libxslt-dev build-essential libz-dev curl",
-          "cd integration",
-          "pip install -r requirements.txt",
-          "py.test -x -s test-ui.py --distro=buster --ui-mode=desktop --domain=buster.com --device-host=" + name + ".buster.com --app=" + name + " --browser=" + browser
-        ]
-    },
-    {
-        name: "test-ui-mobile-buster",
-        image: "python:3.8-slim-buster",
-        commands: [
-          "cd integration",
-          "./deps.sh",
-          "py.test -x -s test-ui.py --distro=buster --ui-mode=mobile --domain=buster.com --device-host=" + name + ".buster.com --app=" + name + " --browser=" + browser
-        ]
-    } ] else [] ) +
+    }
+        for mode in ["desktop", "mobile"]
+        for distro in ["buster", "jessie"] 
+    ] else [] ) +
    ( if arch == "amd64" then [
     {
         name: "test-upgrade",
@@ -363,4 +334,3 @@ local build(arch, test_ui) = [{
 build("amd64", true) + 
 build("arm64", false) +
 build("arm", false)
-
