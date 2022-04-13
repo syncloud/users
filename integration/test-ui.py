@@ -1,8 +1,8 @@
 from os.path import dirname, join
 from subprocess import check_output
-
+from integration.lib import login_with_admin
 import pytest
-from syncloudlib.integration.hosts import add_host_alias_by_ip
+from syncloudlib.integration.hosts import add_host_alias
 
 DIR = dirname(__file__)
 TMP_DIR = '/tmp/syncloud/ui'
@@ -28,23 +28,11 @@ def module_setup(request, device, artifact_dir, ui_mode):
 
 
 def test_start(module_setup, app, domain, device_host):
-    add_host_alias_by_ip(app, domain, device_host)
-
-
-def test_index(selenium):
-    selenium.open_app()
-    selenium.screenshot('index')
+    add_host_alias(app, device_host, domain)
 
 
 def test_login_with_admin(selenium, device_user, device_password):
-    selenium.find_by_xpath("//a[text()='Log In']").click()
-    selenium.find_by_xpath("//input[@name='user_id']").send_keys(device_user)
-    password = selenium.driver.find_element_by_name("password")
-    password.send_keys(device_password)
-    selenium.screenshot('login-credentials')
-    password.submit()
-    selenium.find_by_xpath("//a[text()='Log Out']")
-    selenium.screenshot('main')
+    login_with_admin(selenium, device_user, device_password)
 
 
 # def test_password_edit(driver, ui_mode, screenshot_dir):
@@ -72,7 +60,7 @@ def test_new_user(selenium, new_username, new_mail):
     selenium.find_by_xpath("//a[text()='Users']")
     new_user_btn = selenium.find_by_xpath("//button[contains(text(),'New user')]")
     selenium.screenshot('add-user-before-open')
-    assert 'WARNING' not in selenium.driver.page_source.encode("utf-8")
+    assert 'WARNING' not in str(selenium.driver.page_source.encode("utf-8"))
     new_user_btn.click()
 
     selenium.find_by_xpath("//div[text()='New account']")
@@ -238,4 +226,7 @@ def test_new_user_login_second(selenium, new_username):
 #     screenshots(driver, screenshot_dir, 'modify-same-user-' + ui_mode)
 #     assert not len(driver.find_elements_by_xpath("//h4[contains(string(),'An error occured')]"))
 
+
+def test_teardown(driver):
+    driver.quit()
 
