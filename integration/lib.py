@@ -3,7 +3,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 
-
 def login_with_admin(selenium, device_user, device_password):
     selenium.open_app()
     selenium.screenshot('index')
