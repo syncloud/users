@@ -5,6 +5,11 @@ cd ${DIR}
 
 BUILD_DIR=${DIR}/../build/snap/php
 
+while ! docker ps; do
+    echo "waiting for docker"
+    sleep 2
+done
+
 docker build -t php:syncloud .
 docker run php:syncloud php -i
 docker create --name=php php:syncloud
