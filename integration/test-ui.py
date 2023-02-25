@@ -147,7 +147,8 @@ def test_user_no_first_last_name(selenium, device_user, device_password, new_mai
     selenium.find_by_name("password_match").send_keys(new_password)
     selenium.find_by_id("mail").send_keys(new_mail)
     selenium.find_by_xpath("//button[text()='Create account']").click()
-    selenium.find_by_xpath("//p[contains(text(),'The account was created')]")
+    selenium.find_by_xpath("//li[contains(text(),'First Name is required')]")
+    selenium.find_by_xpath("//li[contains(text(),'Last Name is required')]")
 
 
 def test_teardown(driver):
