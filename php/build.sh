@@ -10,7 +10,7 @@ while ! docker ps; do
     sleep 2
 done
 
-wbile ! docker build -t php:syncloud .; do
+while ! docker build -t php:syncloud . ; do
   echo "retry docker"
 done
 
