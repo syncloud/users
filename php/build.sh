@@ -10,7 +10,10 @@ while ! docker ps; do
     sleep 2
 done
 
-docker build -t php:syncloud .
+wbile ! docker build -t php:syncloud .; do
+  echo "retry docker"
+done
+
 docker run php:syncloud php -i
 docker create --name=php php:syncloud
 mkdir -p ${BUILD_DIR}
