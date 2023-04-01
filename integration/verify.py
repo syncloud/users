@@ -49,6 +49,7 @@ def module_setup(request, device, data_dir, platform_data_dir, app_dir, artifact
 def test_start(module_setup, device, app, domain, device_host):
     add_host_alias(app, device_host, domain)
     device.run_ssh('date', retries=100, throw=True)
+    device.run_ssh('mkdir {0}'.format(TMP_DIR))
 
 
 def test_activate_device(device):
@@ -63,6 +64,10 @@ def test_install(app_archive_path, device_host, device_password):
 def test_index(app_domain):
     response = requests.get('https://{0}'.format(app_domain), verify=False)
     assert response.status_code == 200, response.text
+
+
+def test_storage_change_event(device):
+    device.run_ssh('snap run users.storage-change > {0}/storage-change.log'.format(TMP_DIR))
 
 
 # def test_upgrade(app_archive_path, device_host, device_password):
