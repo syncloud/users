@@ -1,5 +1,5 @@
 local name = "users";
-local version = "master";
+local version = "ccc709e010d1cba6146674fd5f844ee079d4bd8e";
 local browser = "chrome";
 
 local build(arch, test_ui, dind) = [{
