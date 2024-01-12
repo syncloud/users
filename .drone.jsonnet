@@ -1,5 +1,5 @@
 local name = "users";
-local version = "ccc709e010d1cba6146674fd5f844ee079d4bd8e";
+local version = "40ec4a151c8451f5d56f007d817206862d0f4279";
 local browser = "firefox";
 local selenium = "4.16.1-20231219";
 local release = "4";
