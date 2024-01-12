@@ -1,6 +1,8 @@
 local name = "users";
 local version = "ccc709e010d1cba6146674fd5f844ee079d4bd8e";
-local browser = "chrome";
+local browser = "firefox";
+local selenium = "4.16.1-20231219";
+local release = "4";
 
 local build(arch, test_ui, dind) = [{
     kind: "pipeline",
@@ -151,7 +153,7 @@ local build(arch, test_ui, dind) = [{
         commands: [
             "PACKAGE=$(cat package.name)",
             "apt update && apt install -y wget",
-            "wget https://github.com/syncloud/snapd/releases/download/1/syncloud-release-" + arch + " -O release --progress=dot:giga",
+            "wget https://github.com/syncloud/snapd/releases/download/" + release + "/syncloud-release-" + arch + " -O release --progress=dot:giga",
             "chmod +x release",
             "./release publish -f $PACKAGE -b $DRONE_BRANCH"
         ],
@@ -226,7 +228,7 @@ local build(arch, test_ui, dind) = [{
     ] + ( if test_ui then [
         {
             name: "selenium",
-            image: "selenium/standalone-" + browser + ":4.1.2-20220208",
+            image: "selenium/standalone-" + browser + ":" + selenium,
             environment: {
                 SE_NODE_SESSION_TIMEOUT: "999999",
                 START_XVFB: "true"
@@ -286,7 +288,7 @@ local build(arch, test_ui, dind) = [{
              },
              commands: [
                "apt update && apt install -y wget",
-               "wget https://github.com/syncloud/snapd/releases/download/1/syncloud-release-" + arch + " -O release --progress=dot:giga",
+               "wget https://github.com/syncloud/snapd/releases/download/" + release + "/syncloud-release-" + arch + " -O release --progress=dot:giga",
                "chmod +x release",
                "./release promote -n " + name + " -a $(dpkg --print-architecture)"
              ]
