@@ -1,3 +1,4 @@
+import time
 from os.path import dirname, join
 from subprocess import check_output
 from integration.lib import login_with_admin
@@ -27,8 +28,10 @@ def module_setup(request, device, artifact_dir, ui_mode):
     request.addfinalizer(module_teardown)
 
 
-def test_start(module_setup, app, domain, device_host):
+def test_start(module_setup, app, domain, device_host, device):
     add_host_alias(app, device_host, domain)
+    device.run_ssh('date', retries=100, throw=True)
+    time.sleep(10)
 
 
 def test_login_with_admin(selenium, device_user, device_password):
