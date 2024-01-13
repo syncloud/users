@@ -12,6 +12,5 @@ def login_with_admin(selenium, device_user, device_password):
     password.send_keys(device_password)
     selenium.screenshot('login-credentials')
     password.submit()
-    selenium.open_app()
     selenium.find_by_xpath("//a[text()='Log Out']")
     selenium.screenshot('main')

@@ -19,7 +19,8 @@ tar xf nginx-${ARCH}.tar.gz
 mv nginx ${BUILD_DIR}
 
 cd ${DIR}/build
-wget --progress=dot:giga https://github.com/wheelybird/ldap-user-manager/archive/${VERSION}.tar.gz
-#wget --progress=dot:giga https://github.com/cyberb/ldap-user-manager/archive/refs/heads/${VERSION}.tar.gz
+#wget --progress=dot:giga https://github.com/wheelybird/ldap-user-manager/archive/${VERSION}.tar.gz
+VERSION=master
+wget --progress=dot:giga https://github.com/cyberb/ldap-user-manager/archive/refs/heads/${VERSION}.tar.gz
 tar xzf ${VERSION}.tar.gz
 mv ldap-user-manager-${VERSION}/www ${BUILD_DIR}
