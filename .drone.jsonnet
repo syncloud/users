@@ -2,7 +2,7 @@ local name = "users";
 local version = "40ec4a151c8451f5d56f007d817206862d0f4279";
 local browser = "firefox";
 local selenium = "4.16.1-20231219";
-local release = "4";
+local deployer = "https://github.com/syncloud/store/releases/download/4/syncloud-release";
 
 local build(arch, test_ui, dind) = [{
     kind: "pipeline",
@@ -153,7 +153,7 @@ local build(arch, test_ui, dind) = [{
         commands: [
             "PACKAGE=$(cat package.name)",
             "apt update && apt install -y wget",
-            "wget https://github.com/syncloud/snapd/releases/download/" + release + "/syncloud-release-" + arch + " -O release --progress=dot:giga",
+            "wget " + deployer + "-" + arch + " -O release --progress=dot:giga",
             "chmod +x release",
             "./release publish -f $PACKAGE -b $DRONE_BRANCH"
         ],
@@ -161,6 +161,31 @@ local build(arch, test_ui, dind) = [{
             branch: ["stable", "master"]
         }
     },
+    {
+            name: "promote",
+            image: "debian:buster-slim",
+            environment: {
+                AWS_ACCESS_KEY_ID: {
+                    from_secret: "AWS_ACCESS_KEY_ID"
+                },
+                AWS_SECRET_ACCESS_KEY: {
+                    from_secret: "AWS_SECRET_ACCESS_KEY"
+                },
+                 SYNCLOUD_TOKEN: {
+                     from_secret: "SYNCLOUD_TOKEN"
+                 }
+            },
+            commands: [
+              "apt update && apt install -y wget",
+              "wget " + deployer + "-" + arch + " -O release --progress=dot:giga",
+              "chmod +x release",
+              "./release promote -n " + name + " -a $(dpkg --print-architecture)"
+            ],
+            when: {
+                branch: ["stable"],
+                event: ["push"]
+            }
+      },
     {
         name: "artifact",
         image: "appleboy/drone-scp:1.6.4",
@@ -265,41 +290,7 @@ local build(arch, test_ui, dind) = [{
             temp: {}
         },
     ]
-},
-{
-     kind: "pipeline",
-     type: "docker",
-     name: "promote-" + arch,
-     platform: {
-         os: "linux",
-         arch: arch
-     },
-     steps: [
-     {
-             name: "promote",
-             image: "debian:buster-slim",
-             environment: {
-                 AWS_ACCESS_KEY_ID: {
-                     from_secret: "AWS_ACCESS_KEY_ID"
-                 },
-                 AWS_SECRET_ACCESS_KEY: {
-                     from_secret: "AWS_SECRET_ACCESS_KEY"
-                 }
-             },
-             commands: [
-               "apt update && apt install -y wget",
-               "wget https://github.com/syncloud/snapd/releases/download/" + release + "/syncloud-release-" + arch + " -O release --progress=dot:giga",
-               "chmod +x release",
-               "./release promote -n " + name + " -a $(dpkg --print-architecture)"
-             ]
-       }
-      ],
-      trigger: {
-       event: [
-         "promote"
-       ]
-     }
- }];
+}];
 
 build("amd64", true, "20.10.21-dind") +
 build("arm64", false, "19.03.8-dind") +
