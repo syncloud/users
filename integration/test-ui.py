@@ -30,6 +30,7 @@ def module_setup(request, device, artifact_dir, ui_mode):
 
 def test_start(module_setup, app, domain, device_host, device):
     add_host_alias(app, device_host, domain)
+    device.activated()
     device.run_ssh('date', retries=10, throw=True)
     time.sleep(10)
 
