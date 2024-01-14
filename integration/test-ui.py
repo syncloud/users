@@ -59,7 +59,7 @@ def test_new_user(selenium, new_username, new_mail):
 def test_new_user_login(selenium, new_username):
     logout(selenium)
     selenium.find_by_xpath("//input[@name='user_id']").send_keys(new_username)
-    password = selenium.driver.find_element_by_name("password")
+    password = selenium.find_by_name("password")
     password.send_keys(new_password)
     selenium.screenshot('new-user-login-credentials')
     password.submit()
@@ -75,7 +75,7 @@ def logout(selenium):
 def test_login_with_admin_second(selenium, device_user, device_password):
     logout(selenium)
     selenium.find_by_xpath("//input[@name='user_id']").send_keys(device_user)
-    password = selenium.driver.find_element_by_name("password")
+    password = selenium.find_by_name("password")
     password.send_keys(device_password)
     selenium.screenshot('login-credentials-second')
     password.submit()
@@ -124,7 +124,7 @@ def test_group_modify(selenium, new_username):
 def test_new_user_login_second(selenium, new_username):
     logout(selenium)
     selenium.find_by_xpath("//input[@name='user_id']").send_keys(new_username)
-    password = selenium.driver.find_element_by_name("password")
+    password = selenium.find_by_name("password")
     password.send_keys(new_password)
     selenium.screenshot('new-user-login-credentials-second')
     password.submit()
