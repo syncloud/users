@@ -24,7 +24,7 @@ apps:
     command: hooks/storage-change
 
 confinement: strict
-description: Users
+description: User management app
 grade: stable
 name: users
 summary: Users
